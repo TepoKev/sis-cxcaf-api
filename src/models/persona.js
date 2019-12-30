@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 import {sequelize} from "../database/database";
-import Profesion from "../models/profesion";
+import Profesion from "./profesion";
 
 const Persona = sequelize.define('persona', {
   id: {
@@ -26,7 +26,7 @@ const Persona = sequelize.define('persona', {
     allowNull: false
   },
   genero: {
-    type: Sequelize.ENUM('masculino','femenino','',''),
+    type: Sequelize.ENUM('masculino','femenino'),
     allowNull: false
   },
   salario: {
