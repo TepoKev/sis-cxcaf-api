@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
-import {sequelize} from "../database/database";
-import Persona from "../models/persona";
+import { sequelize } from "../database/database";
+import Persona from "./persona";
 
 const Cliente = sequelize.define('cliente', {
   id: {
