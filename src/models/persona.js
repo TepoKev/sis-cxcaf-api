@@ -7,7 +7,7 @@ const Persona = sequelize.define('persona', {
     type: Sequelize.INTEGER(11),
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement : true
   },
   nombres: {
     type: Sequelize.STRING(50),
