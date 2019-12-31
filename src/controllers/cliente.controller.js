@@ -95,7 +95,6 @@ export async function createCliente( req, res ){
         newPersona.dataValues.profesion = profesion.dataValues;
         newCliente.dataValues.persona = newPersona.dataValues;
         res.json(newCliente);
-        res.status(200);
     } catch (error) {
         console.log(error);
         res.status(500).json({
