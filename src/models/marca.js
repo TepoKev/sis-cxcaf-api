@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
 
-const Marca = sequelize.define('marca', {
+const marcaObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -12,9 +12,11 @@ const Marca = sequelize.define('marca', {
     type: Sequelize.STRING(25),
     allowNull: false
   }
-}, {
+};
+
+const Marca = sequelize.define('marca', marcaObj, {
   timestamps : false,
   tableName: 'marca'
 });
 
-export default Marca;
+export { Marca, marcaObj };

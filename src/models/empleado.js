@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Persona from "./persona";
+import { Persona } from "./persona";
 
-const Empleado = sequelize.define('empleado', {
+const empleadoObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -21,21 +21,14 @@ const Empleado = sequelize.define('empleado', {
       key: 'id'
     },
     unique: true
-  },
-  idUsuario: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'usuario',
-      key: 'id'
-    },
-    unique: true
   }
-}, {
+};
+
+const Empleado = sequelize.define('empleado', empleadoObj , {
   timestamps: false,
   tableName: 'empleado'
 });
 
-Empleado.belongsTo(Persona, { foreignKey : "idPersona" });
+Empleado.belongsTo( Persona, { foreignKey : "idPersona" } );
 
-export default Empleado;
+export { Empleado, empleadoObj };

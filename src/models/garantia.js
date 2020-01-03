@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Credito from "./credito";
+import { Credito } from "./credito";
 
-const Garantia = sequelize.define('garantia', {
+const garantiaObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -25,11 +25,13 @@ const Garantia = sequelize.define('garantia', {
       key: 'id'
     }
   }
-}, {
+};
+
+const Garantia = sequelize.define('garantia', garantiaObj, {
   timestamps: false,
   tableName: 'garantia'
 });
 
 Garantia.belongsTo( Credito, { foreignKey : "idCredito" } );
 
-export default Garantia;
+export { Garantia, garantiaObj };

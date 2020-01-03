@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
-import {sequelize} from "../database/database";
+import { sequelize } from "../database/database";
 
-const Sucursal = sequelize.define('sucursal', {
+const sucursalObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -16,9 +16,11 @@ const Sucursal = sequelize.define('sucursal', {
     type: Sequelize.STRING(5),
     allowNull: false
   }
-}, {
+};
+
+const Sucursal = sequelize.define('sucursal', sucursalObj, {
   timestamps : false,
   tableName: 'sucursal'
 });
 
-export default Sucursal;
+export { Sucursal, sucursalObj };

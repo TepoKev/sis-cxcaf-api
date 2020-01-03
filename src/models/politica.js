@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
-import {sequelize} from "../database/database";
+import { sequelize } from "../database/database";
 
-const Politica = sequelize.define('politica', {
+const politicaObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -32,9 +32,11 @@ const Politica = sequelize.define('politica', {
     type: Sequelize.DECIMAL,
     allowNull: false
   }
-}, {
+};
+
+const Politica = sequelize.define('politica', politicaObj, {
   timestamps : false,
   tableName: 'politica'
 });
 
-export default Politica;
+export { Politica, politicaObj };

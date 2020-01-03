@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Persona from "./persona";
+import { Persona } from "./persona";
 
-const Fiador = sequelize.define('fiador', {
+const fiadorObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -18,11 +18,13 @@ const Fiador = sequelize.define('fiador', {
     },
     unique : true
   }
-}, {
+};
+
+const Fiador = sequelize.define('fiador', fiadorObj, {
   timestamps: false,
   tableName: 'fiador'
 });
 
 Fiador.belongsTo(Persona, { foreignKey : "idPersona" });
 
-export default Fiador;
+export { Fiador, fiadorObj };

@@ -1,8 +1,9 @@
 import Sequelize from "sequelize";
-import {sequelize} from "../database/database";
-import Profesion from "./profesion";
+import { sequelize } from "../database/database";
+import { Profesion } from "./profesion";
+import { Usuario } from "./usuario";
 
-const Persona = sequelize.define('persona', {
+const personaObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -19,7 +20,8 @@ const Persona = sequelize.define('persona', {
   },
   dui: {
     type: Sequelize.STRING(12),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   telefono: {
     type: Sequelize.STRING(12),
@@ -43,7 +45,8 @@ const Persona = sequelize.define('persona', {
   },
   nit: {
     type: Sequelize.STRING(20),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   fechaN: {
     type: Sequelize.DATEONLY,
@@ -60,12 +63,24 @@ const Persona = sequelize.define('persona', {
   estadoCivil: {
     type: Sequelize.ENUM('soltero/a','casado/a','acompañado/a','viudo/a','divorciado/a'),
     allowNull: false
+  },
+  idUsuario: {
+    type: Sequelize.INTEGER(11),
+    allowNull: false,
+    references: {
+      model: 'usuario',
+      key: 'id'
+    },
+    unique: true
   }
-}, {
+};
+
+const Persona = sequelize.define('persona', personaObj, {
   timestamps: false,
   tableName: 'persona'
 });
 
-Persona.belongsTo(Profesion, {foreignKey: 'idProfesion'});
+Persona.belongsTo( Profesion, { foreignKey : 'idProfesion' } );
+Persona.belongsTo( Usuario, { foreignKey : 'idUsuario' });
 
-export default Persona;
+export { Persona, personaObj };

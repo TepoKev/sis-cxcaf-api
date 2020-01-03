@@ -1,9 +1,9 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Credito from "./credito";
-import Fiador from "./fiador";
+import { Credito } from "./credito";
+import { Fiador } from "./fiador";
 
-const CreditoFiador = sequelize.define('credito_fiador', {
+const creditoFiadorObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -26,7 +26,9 @@ const CreditoFiador = sequelize.define('credito_fiador', {
       key: 'id'
     }
   }
-}, {
+};
+
+const CreditoFiador = sequelize.define('credito_fiador', creditoFiadorObj, {
   timestamps: false,
   tableName: 'credito_fiador'
 });
@@ -34,4 +36,4 @@ const CreditoFiador = sequelize.define('credito_fiador', {
 CreditoFiador.belongsTo( Credito, { foreignKey : "idCredito" } );
 CreditoFiador.belongsTo( Fiador, { foreignKey : "idFiador" }) ;
 
-export default CreditoFiador;
+export { CreditoFiador, creditoFiadorObj };

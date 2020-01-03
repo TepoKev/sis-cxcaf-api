@@ -1,9 +1,9 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Empleado from "./empleado";
-import Credito from "./credito";
+import { Empleado } from "./empleado";
+import { Credito } from "./credito";
 
-const Cuota = sequelize.define('cuota', {
+const cuotaObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -38,7 +38,9 @@ const Cuota = sequelize.define('cuota', {
       key: 'id'
     }
   }
-}, {
+};
+
+const Cuota = sequelize.define('cuota', cuotaObj, {
   timestamps: false,
   tableName: 'cuota'
 });
@@ -46,4 +48,4 @@ const Cuota = sequelize.define('cuota', {
 Cuota.belognsTo( Empleado, { foreignKey : "idEmpleado" } );
 Cuota.belognsTo( Credito, { foreignKey : "idCredito" } );
 
-export default Cuota;
+export { Cuota, cuotaObj };

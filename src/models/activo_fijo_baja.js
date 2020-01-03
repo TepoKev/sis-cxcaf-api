@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import ActivoFijo from "./activo_fijo";
+import { ActivoFijo } from "./activo_fijo";
 
-const ActivoFijoBaja = sequelize.define('activo_fijo_baja', {
+const activoFijoBajaObj = {
   idActivoFijo: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -20,11 +20,13 @@ const ActivoFijoBaja = sequelize.define('activo_fijo_baja', {
     type: Sequelize.DATEONLY,
     allowNull: false
   }
-}, {
+}
+
+const ActivoFijoBaja = sequelize.define('activo_fijo_baja', activoFijoBajaObj, {
   timestamps: false,
   tableName: 'activo_fijo_baja'
 });
 
 ActivoFijoBaja.belongsTo( ActivoFijo, { foreignKey : "idActivoFijo" } );
 
-export default ActivoFijoBaja;
+export { ActivoFijoBaja, activoFijoBajaObj };

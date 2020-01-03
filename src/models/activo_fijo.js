@@ -1,12 +1,12 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Empleado from "./empleado";
-import Departamento from "./departamento";
-import Marca from "./marca";
-import Sucursal from "./sucursal";
-import TipoActivo from "./tipo_activo";
+import { Empleado } from "./empleado";
+import { Departamento } from "./departamento";
+import { Marca } from "./marca";
+import { Sucursal } from "./sucursal";
+import { TipoActivo, tipoActivoObj } from "./tipo_activo";
 
-const ActivoFijo = sequelize.define('activo_fijo', {
+const activoFijoObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -73,7 +73,9 @@ const ActivoFijo = sequelize.define('activo_fijo', {
     type: Sequelize.DATEONLY,
     allowNull: false
   }
-}, {
+};
+
+const ActivoFijo = sequelize.define('activo_fijo', tipoActivoObj, {
   timestamps: false,
   tableName: 'activo_fijo'
 });
@@ -84,4 +86,4 @@ ActivoFijo.belongsTo( Marca, { foreignKey : "idMarca" } );
 ActivoFijo.belongsTo( Sucursal, { foreignKey : "idSucursal" } );
 ActivoFijo.belongsTo( TipoActivo, { foreignKey : "idTipo" } );
 
-export default ActivoFijo ;
+export { ActivoFijo, activoFijoObj };

@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
 
-const Departamento = sequelize.define('departamento', {
+const departamentoObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -16,9 +16,11 @@ const Departamento = sequelize.define('departamento', {
     type: Sequelize.STRING(5),
     allowNull: false
   }
-}, {
+};
+
+const Departamento = sequelize.define('departamento', departamentoObj, {
   timestamps: false,
   tableName: 'departamento'
 });
 
-export default Departamento;
+export { Departamento, departamentoObj };

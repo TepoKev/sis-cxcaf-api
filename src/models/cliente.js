@@ -1,9 +1,8 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import Persona from "./persona";
-import Usuario from "./usuario";
+import { Persona } from "./persona";
 
-const Cliente = sequelize.define('cliente', {
+const clienteObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -14,34 +13,26 @@ const Cliente = sequelize.define('cliente', {
     type: Sequelize.ENUM('Persona Natural','Persona Jurídica'),
     allowNull: false
   },
+  clasificacion: {
+    type: Sequelize.STRING(1),
+    allowNull: false
+  },
   idPersona: {
     type: Sequelize.INTEGER(11),
-    allowNull: true,
+    allowNull: false,
     references: {
       model: 'persona',
       key: 'id'
     },
     unique: true
-  },
-  clasificacion: {
-    type: Sequelize.STRING(1),
-    allowNull: false
-  },
-  idUsuario: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'usuario',
-      key: 'id'
-    },
-    unique: true
   }
-}, {
+};
+
+const Cliente = sequelize.define('cliente', clienteObj, {
   timestamps: false,
   tableName: 'cliente'
 });
 
 Cliente.belongsTo( Persona, { foreignKey: 'idPersona' } );
-Cliente.belongsTo( Usuario, { foreignKey : 'idUsuario' } );
 
-export default Cliente;
+export { Cliente, clienteObj };

@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
 
-const tipoActivoObj = {
+const rolObj = {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -9,18 +9,14 @@ const tipoActivoObj = {
     autoIncrement : true
   },
   nombre: {
-    type: Sequelize.STRING(25),
-    allowNull: false
-  },
-  codigo: {
-    type: Sequelize.STRING(5),
+    type: Sequelize.STRING(50),
     allowNull: false
   }
 };
 
-const TipoActivo = sequelize.define('tipo_activo', tipoActivoObj, {
+const Rol = sequelize.define('rol', rolObj, {
   timestamps : false,
-  tableName: 'tipo_activo'
+  tableName: 'rol'
 });
 
-export { TipoActivo, tipoActivoObj };
+export { Rol, rolObj };
