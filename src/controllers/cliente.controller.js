@@ -1,8 +1,10 @@
-import Cliente from "../models/cliente";
-import Persona from "../models/persona";
-import Profesion from "../models/profesion";
-import Usuario from "../models/usuario";
-import Rol from "../models/rol";
+import { Cliente , clienteObj } from "../models/cliente";
+import { Persona, personaObj } from "../models/persona";
+import { Profesion } from "../models/profesion";
+import { Usuario, usuarioObj } from "../models/usuario";
+import { Rol } from "../models/rol";
+import { capture } from "../utils/captureParams";
+
 export async function getClientes(req, res) {
     try {
         const clientes = await Cliente.findAll({
@@ -65,53 +67,14 @@ export async function getOneCliente(req, res) {
 
 export async function createCliente(req, res) {
     try {
-        const {
-            //Datos de persona
-            nombres,
-            apellidos,
-            dui,
-            telefono,
-            genero,
-            salario,
-            idProfesion,
-            nit,
-            fechaN,
-            direccion,
-            zona,
-            estadoCivil,
-            //Datos de cliente
-            tipo,
-            clasificacion,
-            //Datos de Usuario
-            username,
-            password,
-            idRol
-        } = req.body;
-        const newUsuario = await Usuario.create({
-            username,
-            password,
-            idRol
-        });
-        const newPersona = await Persona.create({
-            nombres,
-            apellidos,
-            dui,
-            telefono,
-            genero,
-            salario,
-            idProfesion,
-            nit,
-            fechaN,
-            direccion,
-            zona,
-            estadoCivil,
-            idUsuario: newUsuario.dataValues.id
-        });
-        const newCliente = await Cliente.create({
-            tipo,
-            idPersona: newPersona.id,
-            clasificacion
-        });
+        const dataPersona = capture( personaObj, req.body );
+        const dataCliente = capture( clienteObj, req.body );
+        const dataUsuario = capture( usuarioObj, req.body );
+        const newUsuario = await Usuario.create(dataUsuario);
+        dataPersona.idUsuario = newUsuario.dataValues.id;
+        const newPersona = await Persona.create(dataPersona);
+        dataCliente.idPersona = newPersona.dataValues.id;
+        const newCliente = await Cliente.create(dataCliente);
         const profesion = await Profesion.findOne({
             where: {
                 id: newPersona.dataValues.idProfesion
@@ -138,129 +101,66 @@ export async function createCliente(req, res) {
 export async function updateCliente(req, res) {
     try {
         const { id } = req.params;
-        const {
-            //Datos de persona
-            nombres,
-            apellidos,
-            dui,
-            telefono,
-            genero,
-            salario,
-            idProfesion,
-            nit,
-            fechaN,
-            direccion,
-            zona,
-            estadoCivil,
-            //Datos de cliente
-            tipo,
-            clasificacion,
-            //Datos de Usuario
-            username,
-            password,
-            idRol
-        } = req.body;
+        const dataPersona = capture( personaObj, req.body );
+        const dataCliente = capture( clienteObj, req.body );
+        const dataUsuario = capture( usuarioObj, req.body );
         const clientes = await Cliente.findAll({
-            attributes: [
-                "id",
-                "tipo",
-                "clasificacion",
-                "idPersona"
-            ],
+            attributes: Object.keys(clienteObj),
             where: {
                 id
             }
         });
         if (clientes.length > 0) {
+            var clienteRet = {};
+            clienteRet = dataCliente;
+            clienteRet.id = id;
+            clienteRet.persona = dataPersona;
+            const profesion = await Profesion.findOne({
+                where: {
+                    id: dataPersona.idProfesion
+                }
+            });
+            clienteRet.persona.profesion = profesion.dataValues;
+            clienteRet.persona.usuario = dataUsuario;
+            const rol = await Rol.findOne({
+                where: {
+                    id: dataUsuario.idRol
+                }
+            });
+            clienteRet.persona.usuario.rol = rol.dataValues;
             clientes.forEach(async cliente => {
-                await cliente.update({
-                    tipo,
-                    clasificacion
-                });
+                await cliente.update(dataCliente);
                 const personas = await Persona.findAll({
-                    attributes: [
-                        "id",
-                        "nombres",
-                        "apellidos",
-                        "dui",
-                        "telefono",
-                        "genero",
-                        "salario",
-                        "idProfesion",
-                        "nit",
-                        "fechaN",
-                        "direccion",
-                        "zona",
-                        "estadoCivil",
-                        "idUsuario",
-                    ],
+                    attributes: Object.keys(personaObj),
                     where: {
                         id: cliente.dataValues.idPersona
                     }
                 });
                 if (personas.length > 0) {
                     personas.forEach(async persona => {
-                        await persona.update({
-                            nombres,
-                            apellidos,
-                            dui,
-                            telefono,
-                            genero,
-                            salario,
-                            idProfesion,
-                            nit,
-                            fechaN,
-                            direccion,
-                            zona,
-                            estadoCivil,
-                        });
+                        await persona.update(dataPersona);
                         const usuarios = await Usuario.findAll({
-                            attributes: [
-                                "id",
-                                "username",
-                                "password",
-                                "idRol"
-                            ],
+                            attributes: Object.keys(usuarioObj),
                             where: {
                                 id: persona.dataValues.idUsuario
                             }
                         });
                         if (usuarios.length > 0) {
                             usuarios.forEach(async usuario => {
-                                await usuario.update({
-                                    username,
-                                    password,
-                                    idRol
-                                });
+                                await usuario.update(dataUsuario);
                             });
                         }
                     });
                 }
             });
-            const cliente = await Cliente.findOne({
-                where: {
-                    id
-                },
-                include: [
-                    {
-                        model: Persona, include: [
-                            { model: Profesion },
-                            {
-                                model: Usuario, include: [
-                                    { model: Rol }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            });
-            res.json(cliente);
+            res.json(clienteRet);
         } else {
             res.status(400).json({
                 message: "Alguno de los registros no se ha encontrado"
             });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Error en el servidor"
         });
