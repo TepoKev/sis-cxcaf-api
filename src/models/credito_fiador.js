@@ -25,6 +25,10 @@ const creditoFiadorObj = {
       model: 'credito',
       key: 'id'
     }
+  },
+  estado :{
+    type : Sequelize.BOOLEAN,
+    allowNull: false
   }
 };
 

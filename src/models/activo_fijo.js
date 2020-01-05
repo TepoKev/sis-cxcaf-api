@@ -4,7 +4,7 @@ import { Empleado } from "./empleado";
 import { Departamento } from "./departamento";
 import { Marca } from "./marca";
 import { Sucursal } from "./sucursal";
-import { TipoActivo, tipoActivoObj } from "./tipo_activo";
+import { TipoActivo } from "./tipo_activo";
 
 const activoFijoObj = {
   id: {
@@ -75,7 +75,7 @@ const activoFijoObj = {
   }
 };
 
-const ActivoFijo = sequelize.define('activo_fijo', tipoActivoObj, {
+const ActivoFijo = sequelize.define('activo_fijo', activoFijoObj, {
   timestamps: false,
   tableName: 'activo_fijo'
 });

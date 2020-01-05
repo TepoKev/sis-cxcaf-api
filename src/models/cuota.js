@@ -45,7 +45,7 @@ const Cuota = sequelize.define('cuota', cuotaObj, {
   tableName: 'cuota'
 });
 
-Cuota.belognsTo( Empleado, { foreignKey : "idEmpleado" } );
-Cuota.belognsTo( Credito, { foreignKey : "idCredito" } );
+Cuota.belongsTo( Empleado, { foreignKey : "idEmpleado" } );
+Cuota.belongsTo( Credito, { foreignKey : "idCredito" } );
 
 export { Cuota, cuotaObj };

@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
 import { Politica } from "./politica";
-import { Cliente, clienteObj } from "./cliente";
+import { Cliente } from "./cliente";
 import { Empleado } from "./empleado";
 
 const creditoObj = {
@@ -57,12 +57,12 @@ const creditoObj = {
   }
 };
 
-const Credito = sequelize.define('credito', clienteObj, {
+const Credito = sequelize.define('credito', creditoObj, {
   timestamps: false,
   tableName: 'credito'
 });
 
-Credito.belongsTo(Politica , { fireignKey : "idPolitica" });
+Credito.belongsTo(Politica , { foreignKey : "idPolitica" });
 Credito.belongsTo(Cliente , { foreignKey : "idCliente" });
 Credito.belongsTo(Empleado , { foreignKey : "idEmpleado" });
 

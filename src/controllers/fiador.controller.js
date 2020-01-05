@@ -147,8 +147,12 @@ export async function updateFiador(req, res) {
                     });
                 }
             });
+            res.json(fiadorRet);
+        }else{
+            res.status(400).json({
+                message: "Alguno de los registros no se ha encontrado"
+            });
         }
-        res.json(fiadorRet);
     } catch (error) {
         console.log(error);
         res.status(500).json({
