@@ -1,5 +1,6 @@
 import express, { json } from "express";
 import morgan from "morgan";
+import cors from "cors";
 import clienteRoutes from "./routes/cliente.route";
 import empleadoRoutes from "./routes/empleado.route";
 import fiadorRoutes from "./routes/fiador.route";
@@ -23,6 +24,7 @@ app.set("port", process.env.PORT || 4000);
 
 // middlewares
 
+app.use(cors());
 app.use(morgan("dev"));
 app.use(json());
 
