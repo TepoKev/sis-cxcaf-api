@@ -160,3 +160,47 @@ export async function updateEmpleado(req, res) {
         });
     }
 }
+
+export async function getEnumZona(req, res) {
+    try {
+        res.json(personaObj.zona.values);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
+
+export async function getEnumGenero(req, res) {
+    try {
+        res.json(personaObj.genero.values);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
+
+export async function getEnumEstadoCivil(req, res) {
+    try {
+        res.json(personaObj.estadoCivil.values);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
+
+export async function getEnumCargo(req, res) {
+    try {
+        res.json(empleadoObj.cargo.values);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
