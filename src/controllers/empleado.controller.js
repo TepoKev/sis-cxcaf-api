@@ -140,6 +140,22 @@ export async function updateEmpleado(req, res) {
     }
 }
 
+export async function getEnums(req, res) {
+    try {
+        res.json({
+            "zona" : personaObj.zona.values,
+            "genero" : personaObj.genero.values,
+            "estadocivile": personaObj.estadoCivil.values,
+            "cargo" : empleadoObj.cargo.values
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
+
 export async function getEnumZona(req, res) {
     try {
         res.json(personaObj.zona.values);

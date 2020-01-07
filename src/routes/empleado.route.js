@@ -7,12 +7,14 @@ import {
     getEnumZona,
     getEnumGenero,
     getEnumEstadoCivil,
-    getEnumCargo
+    getEnumCargo,
+    getEnums
 } from "../controllers/empleado.controller";
 
 const router = Router();
 
 router.get("/", getEmpleados);
+router.get("/enum", getEnums);
 router.get("/zona", getEnumZona);
 router.get("/genero", getEnumGenero);
 router.get("/estadocivil", getEnumEstadoCivil);

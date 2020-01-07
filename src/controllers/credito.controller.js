@@ -128,3 +128,17 @@ export async function updateCredito(req, res) {
         });
     }
 }
+
+export async function getEnums(req, res) {
+    try {
+        res.json({
+            "estado": creditoObj.estado.values,
+            "tipocredito" : creditoObj.tipoCredito.values
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error en el servidor"
+        });
+    }
+}
