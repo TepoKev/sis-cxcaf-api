@@ -1,8 +1,7 @@
-import { Cliente , clienteObj } from "../models/cliente";
+import { Cliente, clienteObj } from "../models/cliente";
 import { Persona, personaObj } from "../models/persona";
 import { Profesion } from "../models/profesion";
 import { Usuario, usuarioObj } from "../models/usuario";
-import { Rol } from "../models/rol";
 import { capture } from "../utils/captureParams";
 
 export async function getClientes(req, res) {
@@ -13,9 +12,7 @@ export async function getClientes(req, res) {
                     model: Persona, include: [
                         { model: Profesion },
                         {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
+                            model: Usuario
                         }
                     ]
                 }
@@ -42,9 +39,7 @@ export async function getOneCliente(req, res) {
                     model: Persona, include: [
                         { model: Profesion },
                         {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
+                            model: Usuario
                         }
                     ]
                 }
@@ -67,9 +62,9 @@ export async function getOneCliente(req, res) {
 
 export async function createCliente(req, res) {
     try {
-        const dataPersona = capture( personaObj, req.body );
-        const dataCliente = capture( clienteObj, req.body );
-        const dataUsuario = capture( usuarioObj, req.body );
+        const dataPersona = capture(personaObj, req.body);
+        const dataCliente = capture(clienteObj, req.body);
+        const dataUsuario = capture(usuarioObj, req.body);
         const newUsuario = await Usuario.create(dataUsuario);
         dataPersona.idUsuario = newUsuario.dataValues.id;
         const newPersona = await Persona.create(dataPersona);
@@ -80,12 +75,6 @@ export async function createCliente(req, res) {
                 id: newPersona.dataValues.idProfesion
             }
         });
-        const rol = await Rol.findOne({
-            where: {
-                id: newUsuario.dataValues.idRol
-            }
-        });
-        newUsuario.dataValues.rol = rol.dataValues;
         newPersona.dataValues.profesion = profesion.dataValues;
         newPersona.dataValues.usuario = newUsuario.dataValues;
         newCliente.dataValues.persona = newPersona.dataValues;
@@ -101,9 +90,9 @@ export async function createCliente(req, res) {
 export async function updateCliente(req, res) {
     try {
         const { id } = req.params;
-        const dataPersona = capture( personaObj, req.body );
-        const dataCliente = capture( clienteObj, req.body );
-        const dataUsuario = capture( usuarioObj, req.body );
+        const dataPersona = capture(personaObj, req.body);
+        const dataCliente = capture(clienteObj, req.body);
+        const dataUsuario = capture(usuarioObj, req.body);
         const clientes = await Cliente.findAll({
             attributes: Object.keys(clienteObj),
             where: {
@@ -122,12 +111,6 @@ export async function updateCliente(req, res) {
             });
             clienteRet.persona.profesion = profesion.dataValues;
             clienteRet.persona.usuario = dataUsuario;
-            const rol = await Rol.findOne({
-                where: {
-                    id: dataUsuario.idRol
-                }
-            });
-            clienteRet.persona.usuario.rol = rol.dataValues;
             clientes.forEach(async cliente => {
                 await cliente.update(dataCliente);
                 const personas = await Persona.findAll({

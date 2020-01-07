@@ -7,7 +7,6 @@ import { Empleado } from "../models/empleado"
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 
 export async function getGarantias( req, res ){
     try {
@@ -19,11 +18,7 @@ export async function getGarantias( req, res ){
                     model: Cliente, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -33,11 +28,7 @@ export async function getGarantias( req, res ){
                     model: Empleado, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -66,11 +57,7 @@ export async function getGarantia( req, res ){
                     model: Cliente, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -80,11 +67,7 @@ export async function getGarantia( req, res ){
                     model: Empleado, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }

@@ -6,7 +6,6 @@ import { Empleado } from "../models/empleado"
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 
 export async function getCreditos(req, res) {
     try {
@@ -17,11 +16,7 @@ export async function getCreditos(req, res) {
                     model: Cliente, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -31,11 +26,7 @@ export async function getCreditos(req, res) {
                     model: Empleado, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -62,11 +53,7 @@ export async function getCredito(req, res) {
                     model: Cliente, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -76,11 +63,7 @@ export async function getCredito(req, res) {
                     model: Empleado, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }

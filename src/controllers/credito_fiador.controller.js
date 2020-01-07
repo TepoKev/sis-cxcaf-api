@@ -7,7 +7,6 @@ import { Empleado } from "../models/empleado"
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 import { Fiador } from "../models/fiador";
 
 export async function getCreditosFiadores(req, res) {
@@ -18,11 +17,7 @@ export async function getCreditosFiadores(req, res) {
                     model: Fiador, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -35,11 +30,7 @@ export async function getCreditosFiadores(req, res) {
                             model: Cliente, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }
@@ -49,11 +40,7 @@ export async function getCreditosFiadores(req, res) {
                             model: Empleado, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }
@@ -81,11 +68,7 @@ export async function getCreditoFiador(req, res) {
                     model: Fiador, include: [
                         {
                             model: Persona, include: [
-                                {
-                                    model: Usuario, include: [
-                                        { model: Rol }
-                                    ]
-                                },
+                                { model: Usuario },
                                 { model: Profesion }
                             ]
                         }
@@ -98,11 +81,7 @@ export async function getCreditoFiador(req, res) {
                             model: Cliente, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }
@@ -112,11 +91,7 @@ export async function getCreditoFiador(req, res) {
                             model: Empleado, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }

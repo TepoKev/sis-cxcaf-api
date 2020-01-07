@@ -2,7 +2,6 @@ import { Empleado, empleadoObj } from "../models/empleado";
 import { Persona, personaObj } from "../models/persona";
 import { Usuario, usuarioObj } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 import { capture } from "../utils/captureParams";
 
 export async function getEmpleados(req, res) {
@@ -11,11 +10,7 @@ export async function getEmpleados(req, res) {
             include: [
                 {
                     model: Persona, include: [
-                        {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
-                        },
+                        { model: Usuario },
                         { model: Profesion }
                     ]
                 }
@@ -40,11 +35,7 @@ export async function getEmpleado(req, res) {
             include: [
                 {
                     model: Persona, include: [
-                        {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
-                        },
+                        { model: Usuario },
                         { model: Profesion }
                     ]
                 }
@@ -74,12 +65,6 @@ export async function createEmpleado(req, res) {
                 id: newPersona.dataValues.idProfesion
             }
         });
-        const rol = await Rol.findOne({
-            where: {
-                id: newUsuario.dataValues.idRol
-            }
-        });
-        newUsuario.dataValues.rol = rol.dataValues;
         newPersona.dataValues.profesion = profesion.dataValues;
         newPersona.dataValues.usuario = newUsuario.dataValues;
         newEmpleado.dataValues.persona = newPersona.dataValues;
@@ -116,12 +101,6 @@ export async function updateEmpleado(req, res) {
             });
             empleadoRet.persona.profesion = profesion.dataValues;
             empleadoRet.persona.usuario = dataUser;
-            const rol = await Rol.findOne({
-                where: {
-                    id: dataUser.idRol
-                }
-            });
-            empleadoRet.persona.usuario.rol = rol.dataValues;
             empleados.forEach(async empleado => {
                 await empleado.update(dataEmp);
                 const personas = await Persona.findAll({

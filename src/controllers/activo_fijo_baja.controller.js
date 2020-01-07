@@ -9,7 +9,6 @@ import { TipoActivo } from "../models/tipo_activo";
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 
 export async function getActivosFijosBajas(req, res) {
     try {
@@ -21,11 +20,7 @@ export async function getActivosFijosBajas(req, res) {
                             model: Empleado, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }
@@ -59,11 +54,7 @@ export async function getActivoFijoBaja(req, res) {
                             model: Empleado, include: [
                                 {
                                     model: Persona, include: [
-                                        {
-                                            model: Usuario, include: [
-                                                { model: Rol }
-                                            ]
-                                        },
+                                        { model: Usuario },
                                         { model: Profesion }
                                     ]
                                 }

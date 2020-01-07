@@ -2,7 +2,6 @@ import { Fiador, fiadorObj } from "../models/fiador";
 import { Persona, personaObj } from "../models/persona";
 import { Usuario, usuarioObj } from "../models/usuario";
 import { Profesion } from "../models/profesion";
-import { Rol } from "../models/rol";
 import { capture } from "../utils/captureParams";
 
 export async function getFiadores(req, res) {
@@ -11,11 +10,7 @@ export async function getFiadores(req, res) {
             include: [
                 {
                     model: Persona, include: [
-                        {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
-                        },
+                        { model: Usuario },
                         { model: Profesion }
                     ]
                 }
@@ -40,11 +35,7 @@ export async function getFiador(req, res) {
             include: [
                 {
                     model: Persona, include: [
-                        {
-                            model: Usuario, include: [
-                                { model: Rol }
-                            ]
-                        },
+                        { model: Usuario },
                         { model: Profesion }
                     ]
                 }
@@ -71,17 +62,11 @@ export async function createFiador(req, res) {
         const newFiador = await Fiador.create(dataFiador);
         newFiador.dataValues.persona = newPersona.dataValues;
         newFiador.dataValues.persona.usuario = newUser.dataValues;
-        const rol = await Rol.findOne({
-            where : {
-                id : newUser.dataValues.idRol
-            }
-        });
         const profesion = await Profesion.findOne({
             where : {
                 id : newPersona.dataValues.idProfesion
             }
         });
-        newFiador.dataValues.persona.usuario.rol = rol.dataValues;
         newFiador.dataValues.persona.profesion = profesion.dataValues;
         res.json(newFiador);
     } catch (error) {
@@ -115,22 +100,13 @@ export async function updateFiador(req, res) {
             });
             fiadorRet.persona.profesion = profesion.dataValues;
             fiadorRet.persona.usuario = dataUser;
-            const rol = await Rol.findOne({
-                where: {
-                    id: dataUser.idRol
-                }
-            });
-            console.log(1);
-            fiadorRet.persona.usuario.rol = rol.dataValues;
             fiadores.forEach(async fiador => {
                 await fiador.update(dataFiador);
-                console.log(2, fiador.dataValues.idPersona);
                 const personas = await Persona.findAll({
                     where : {
                         id : fiador.dataValues.idPersona
                     }
                 });
-                console.log(3);
                 if(personas.length > 0){
                     personas.forEach(async persona => {
                         await persona.update(dataPerson);
