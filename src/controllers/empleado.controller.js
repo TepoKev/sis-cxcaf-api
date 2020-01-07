@@ -145,7 +145,7 @@ export async function getEnums(req, res) {
         res.json({
             "zona" : personaObj.zona.values,
             "genero" : personaObj.genero.values,
-            "estadocivile": personaObj.estadoCivil.values,
+            "estadocivil": personaObj.estadoCivil.values,
             "cargo" : empleadoObj.cargo.values
         });
     } catch (error) {
