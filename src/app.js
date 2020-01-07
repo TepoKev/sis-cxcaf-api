@@ -15,6 +15,7 @@ import creditoFiadorRoutes from "./routes/credito_fiador.route";
 import cuotaRoutes from "./routes/cuota.route";
 import activoFijoRoutes from "./routes/activo_fijo.route";
 import activoFijoBajaRoutes from "./routes/activo_fijo_baja.route";
+import profesionRoutes from "./routes/profesion.route";
 
 const app = express();
 
@@ -43,5 +44,6 @@ app.use("/api/creditofiador", creditoFiadorRoutes);
 app.use("/api/cuota", cuotaRoutes);
 app.use("/api/activofijo", activoFijoRoutes);
 app.use("/api/activofijobaja", activoFijoBajaRoutes);
+app.use("/api/profesion", profesionRoutes);
 
 export default app;

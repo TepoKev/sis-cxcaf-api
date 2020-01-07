@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    getProfesions,
+    getProfesiones,
     getProfesion,
     createProfesion,
     updateProfesion
@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.get("/", getProfesions);
+router.get("/", getProfesiones);
 router.get("/:id", getProfesion);
 router.post("/", createProfesion);
 router.put("/:id", updateProfesion);
