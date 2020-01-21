@@ -1,14 +1,10 @@
 import { ActivoFijoBaja, activoFijoBajaObj } from "../models/activo_fijo_baja";
 import { capture } from "../utils/captureParams";
 import { ActivoFijo } from "../models/activo_fijo";
-import { Empleado } from "../models/empleado";
 import { Departamento } from "../models/departamento";
 import { Marca } from "../models/marca";
 import { Sucursal } from "../models/sucursal";
 import { TipoActivo } from "../models/tipo_activo";
-import { Persona } from "../models/persona";
-import { Usuario } from "../models/usuario";
-import { Profesion } from "../models/profesion";
 
 export async function getActivosFijosBajas(req, res) {
     try {
@@ -16,16 +12,6 @@ export async function getActivosFijosBajas(req, res) {
             include: [
                 {
                     model: ActivoFijo, include: [
-                        {
-                            model: Empleado, include: [
-                                {
-                                    model: Persona, include: [
-                                        { model: Usuario },
-                                        { model: Profesion }
-                                    ]
-                                }
-                            ]
-                        },
                         { model: Departamento },
                         { model: Marca },
                         { model: Sucursal },
@@ -50,16 +36,6 @@ export async function getActivoFijoBaja(req, res) {
             include: [
                 {
                     model: ActivoFijo, include: [
-                        {
-                            model: Empleado, include: [
-                                {
-                                    model: Persona, include: [
-                                        { model: Usuario },
-                                        { model: Profesion }
-                                    ]
-                                }
-                            ]
-                        },
                         { model: Departamento },
                         { model: Marca },
                         { model: Sucursal },

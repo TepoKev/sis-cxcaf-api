@@ -2,7 +2,6 @@ import { Credito, creditoObj } from "../models/credito";
 import { capture } from "../utils/captureParams";
 import { Politica } from "../models/politica";
 import { Cliente } from "../models/cliente";
-import { Empleado } from "../models/empleado"
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
@@ -14,16 +13,6 @@ export async function getCreditos(req, res) {
                 { model: Politica },
                 {
                     model: Cliente, include: [
-                        {
-                            model: Persona, include: [
-                                { model: Usuario },
-                                { model: Profesion }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    model: Empleado, include: [
                         {
                             model: Persona, include: [
                                 { model: Usuario },
@@ -51,16 +40,6 @@ export async function getCredito(req, res) {
                 { model: Politica },
                 {
                     model: Cliente, include: [
-                        {
-                            model: Persona, include: [
-                                { model: Usuario },
-                                { model: Profesion }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    model: Empleado, include: [
                         {
                             model: Persona, include: [
                                 { model: Usuario },

@@ -1,6 +1,5 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import { Empleado } from "./empleado";
 import { Departamento } from "./departamento";
 import { Marca } from "./marca";
 import { Sucursal } from "./sucursal";
@@ -16,14 +15,6 @@ const activoFijoObj = {
   nombre: {
     type: Sequelize.STRING(60),
     allowNull: false
-  },
-  idEmpleado: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'empleado',
-      key: 'id'
-    }
   },
   descripcion: {
     type: Sequelize.STRING(300),
@@ -80,7 +71,6 @@ const ActivoFijo = sequelize.define('activo_fijo', activoFijoObj, {
   tableName: 'activo_fijo'
 });
 
-ActivoFijo.belongsTo( Empleado, { foreignKey : "idEmpleado" } );
 ActivoFijo.belongsTo( Departamento, { foreignKey : "idDepartamento" } );
 ActivoFijo.belongsTo( Marca, { foreignKey : "idMarca" } );
 ActivoFijo.belongsTo( Sucursal, { foreignKey : "idSucursal" } );

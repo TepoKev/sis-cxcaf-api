@@ -1,14 +1,12 @@
 import { Cuota, cuotaObj } from "../models/cuota";
 import { capture } from "../utils/captureParams";
 import { Credito } from "../models/credito";
-import { Empleado } from "../models/empleado";
 
 export async function getCuotas( req, res ){
     try {
         const cuotas = await Cuota.findAll({
             include : [
-                { model : Credito },
-                { model: Empleado }
+                { model : Credito }
             ]
         });
         res.json(cuotas);
@@ -25,8 +23,7 @@ export async function getCuota( req, res ){
         const { id } = req.params;
         const cuota = await Cuota.findOne({
             include : [
-                { model : Credito },
-                { model: Empleado }
+                { model : Credito }
             ],
             where : {
                 id

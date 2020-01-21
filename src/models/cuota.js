@@ -1,6 +1,5 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
-import { Empleado } from "./empleado";
 import { Credito } from "./credito";
 
 const cuotaObj = {
@@ -17,14 +16,6 @@ const cuotaObj = {
   enMora: {
     type: Sequelize.INTEGER(1),
     allowNull: false
-  },
-  idEmpleado: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'empleado',
-      key: 'id'
-    }
   },
   estado: {
     type: Sequelize.ENUM('cancelado','pendiente'),
@@ -45,7 +36,6 @@ const Cuota = sequelize.define('cuota', cuotaObj, {
   tableName: 'cuota'
 });
 
-Cuota.belongsTo( Empleado, { foreignKey : "idEmpleado" } );
 Cuota.belongsTo( Credito, { foreignKey : "idCredito" } );
 
 export { Cuota, cuotaObj };

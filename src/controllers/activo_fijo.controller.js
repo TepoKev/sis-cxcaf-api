@@ -1,28 +1,14 @@
 import { ActivoFijo, activoFijoObj } from "../models/activo_fijo";
 import { capture } from "../utils/captureParams";
-import { Empleado } from "../models/empleado";
 import { Departamento } from "../models/departamento";
 import { Marca } from "../models/marca";
 import { Sucursal } from "../models/sucursal";
 import { TipoActivo } from "../models/tipo_activo";
-import { Persona } from "../models/persona";
-import { Usuario } from "../models/usuario";
-import { Profesion } from "../models/profesion";
 
 export async function getActivosFijos(req, res) {
     try {
         const activosFijos = await ActivoFijo.findAll({
             include: [
-                {
-                    model: Empleado, include: [
-                        {
-                            model: Persona, include: [
-                                { model: Usuario },
-                                { model: Profesion }
-                            ]
-                        }
-                    ]
-                },
                 { model: Departamento },
                 { model: Marca },
                 { model: Sucursal },
@@ -43,16 +29,6 @@ export async function getActivoFijo(req, res) {
         const { id } = req.params;
         const activoFijo = await ActivoFijo.findOne({
             include: [
-                {
-                    model: Empleado, include: [
-                        {
-                            model: Persona, include: [
-                                { model: Usuario },
-                                { model: Profesion }
-                            ]
-                        }
-                    ]
-                },
                 { model: Departamento },
                 { model: Marca },
                 { model: Sucursal },

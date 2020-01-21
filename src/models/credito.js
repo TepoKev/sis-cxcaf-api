@@ -2,7 +2,6 @@ import Sequelize from "sequelize";
 import { sequelize } from "../database/database";
 import { Politica } from "./politica";
 import { Cliente } from "./cliente";
-import { Empleado } from "./empleado";
 
 const creditoObj = {
   id: {
@@ -22,14 +21,6 @@ const creditoObj = {
   cobro: {
     type: Sequelize.DECIMAL,
     allowNull: false
-  },
-  idEmpleado: {
-    type: Sequelize.INTEGER(11),
-    allowNull: false,
-    references: {
-      model: 'empleado',
-      key: 'id'
-    }
   },
   idPolitica: {
     type: Sequelize.INTEGER(11),
@@ -64,6 +55,5 @@ const Credito = sequelize.define('credito', creditoObj, {
 
 Credito.belongsTo(Politica , { foreignKey : "idPolitica" });
 Credito.belongsTo(Cliente , { foreignKey : "idCliente" });
-Credito.belongsTo(Empleado , { foreignKey : "idEmpleado" });
 
 export { Credito, creditoObj };
