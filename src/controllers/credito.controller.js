@@ -5,6 +5,9 @@ import { Cliente } from "../models/cliente";
 import { Persona } from "../models/persona";
 import { Usuario } from "../models/usuario";
 import { Profesion } from "../models/profesion";
+import { Fiador } from "../models/fiador";
+import { Garantia } from "../models/garantia";
+import { CreditoFiador } from "../models/credito_fiador";
 
 export async function getCreditos(req, res) {
     try {
@@ -70,9 +73,60 @@ export async function getCredito(req, res) {
 
 export async function createCredito(req, res) {
     try {
-        const dataCredito = capture(creditoObj, req.body);
+        console.log(req.body);
+        const dataCredito = capture(creditoObj, req.body.credito);
+        const dataGarantias = req.body.garantias;
+        const dataFiadores = req.body.fiadores;
         const newCredito = await Credito.create(dataCredito);
-        res.json(newCredito);
+        const newGarantias = [];
+        const newFiadores = [];
+        if(dataGarantias != null && dataGarantias.length > 0){
+            for(var i = 0, len = dataGarantias.length; i < len ; i++){
+                let newGarantia = await Garantia.create(
+                    {
+                        nombre : dataGarantias[i].nombre,
+                        valoracionReal : dataGarantias[i].valoracion,
+                        idCredito: newCredito.dataValues.id
+                    }
+                );
+                newGarantias.push(newGarantia);
+            }
+        }
+        if(dataFiadores != null && dataFiadores.length > 0){
+            for(var i = 0, len = dataFiadores.length; i < len ; i++){
+                let newPersona = await Persona.create({
+                    nombres : dataFiadores[i].nombres,
+                    apellidos : dataFiadores[i].apellidos,
+                    dui : dataFiadores[i].dui,
+                    telefono : dataFiadores[i].telefono,
+                    genero : dataFiadores[i].genero,
+                    salario : dataFiadores[i].salario,
+                    idProfesion : dataFiadores[i].idProfesion,
+                    fechaN : dataFiadores[i].fechaN,
+                    direccion : dataFiadores[i].direccion,
+                    zona : dataFiadores[i].zona,
+                    estadoCivil : dataFiadores[i].estadoCivil,
+                    idUsuario : null,
+                    nit : dataFiadores[i].nit
+                });
+                let newFiador = await Fiador.create(
+                    {
+                        idPersona: newPersona.dataValues.id
+                    }
+                );
+                let newCreditoFiador = await CreditoFiador.create({
+                    idFiador : newFiador.dataValues.id,
+                    idCredito : newCredito.dataValues.id,
+                    estado : true
+                });
+                newFiadores.push(newFiador);
+            }
+        }
+        res.json({
+            newCredito,
+            newFiadores,
+            newGarantias
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({

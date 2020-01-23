@@ -66,7 +66,7 @@ const personaObj = {
   },
   idUsuario: {
     type: Sequelize.INTEGER(11),
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'usuario',
       key: 'id'
