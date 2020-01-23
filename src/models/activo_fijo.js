@@ -63,7 +63,11 @@ const activoFijoObj = {
   fechaAdquisicion: {
     type: Sequelize.DATEONLY,
     allowNull: false
-  }
+  },
+  uso: {
+    type: Sequelize.INTEGER(11),
+    allowNull: true,
+  },
 };
 
 const ActivoFijo = sequelize.define('activo_fijo', activoFijoObj, {

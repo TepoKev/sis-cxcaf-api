@@ -4,16 +4,23 @@ import { Departamento } from "../models/departamento";
 import { Marca } from "../models/marca";
 import { Sucursal } from "../models/sucursal";
 import { TipoActivo } from "../models/tipo_activo";
+import { sequelize } from "../database/database";
 
 export async function getActivosFijos(req, res) {
     try {
-        const activosFijos = await ActivoFijo.findAll({
-            include: [
-                { model: Departamento },
-                { model: Marca },
-                { model: Sucursal },
-                { model: TipoActivo }
-            ]
+        // const activosFijos = await ActivoFijo.findAll(
+        //     {
+        //         include: [
+        //             { model: Departamento },
+        //             { model: Marca },
+        //             { model: Sucursal },
+        //             { model: TipoActivo }
+        //         ],
+        //     }
+        // );
+        const activosFijos = await sequelize.query('SELECT * FROM activo_fijo WHERE id NOT IN (SELECT idActivoFijo FROM activo_fijo_baja)', {
+            model: ActivoFijo,
+            mapToModel: true // pass true here if you have any mapped fields
         });
         res.json(activosFijos);
     } catch (error) {
